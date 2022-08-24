@@ -8,13 +8,14 @@ client = bigquery.Client()
 table_id_movements = "vacio-276411.mainDataset.trips_a"
 
 #Get actual positions bigquery for uoid
-def bigquery_positions_by_id(uoid, date):
+def bigquery_positions_by_id(uoid, date_first, date_end):
 
     print('Query uoid:"' + uoid +'"')
 
+    #Partition time is to access to information that BigQuery dont put yet in a partition
     query = ' '.join(("SELECT * FROM `vacio-276411.mainDataset.bulkData`"
-                " WHERE _PARTITIONDATE  = '" + date + "'",
-                "AND uoid = '" + uoid +"'"))
+                "WHERE DATE(timestamp) BETWEEN '" + date_first  + "' AND '" + date_end  + "'AND uoid = '" + uoid +"'",
+                "OR (_PARTITIONTIME IS null AND uoid = '" + uoid +"')"))
 
     query_job = client.query(query)  # Make an API request.
 
@@ -68,11 +69,11 @@ def bigquery_bulk_uoid():
   #ATENTION WITH YEAR
 
   #This query can be reduced using _PARTITIONTIME instead of timestamp
-  #DONE "2010-01-01" AND  "2022-08-10
+  #DONE "2010-01-01" AND  "2022-08-16
 
   query = """
       SELECT uoid, _PARTITIONTIME as pt, realTime FROM `vacio-276411.mainDataset.bulkData` 
-       WHERE DATE(timestamp) BETWEEN "2022-08-11" AND  "2022-08-16"
+       WHERE DATE(timestamp) BETWEEN "2022-08-17" AND  "2022-08-17"
       GROUP BY uoid, pt, realTime
       ORDER BY realTime ASC
   """

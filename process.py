@@ -1,3 +1,5 @@
+import datetime
+
 def execution(uoid):
     #Import other clases
     from firestore import firestore_get_old_situation, firestore_write_changes
@@ -8,8 +10,12 @@ def execution(uoid):
     old_location = firestore_get_old_situation()
     print('Firestore has ' + str(len(old_location)) + ' vehicles')
 
+    #Prepare date - Today +/-1
+    yesterday = (datetime.datetime.today() - datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+    tomorrow = (datetime.datetime.today() - datetime.timedelta(days=-1)).strftime('%Y-%m-%d')
+
     #Get new positions
-    new_locations = bigquery_positions_by_id(uoid)
+    new_locations = bigquery_positions_by_id(uoid,yesterday,tomorrow)
     print('New locations from BigQuery ' + uoid + ' : ' + str(len(new_locations)))
 
     #Calculate movements

@@ -26,7 +26,7 @@ for id,row_uoid in enumerate(uoids_list):
     print(uoid_date_formated)
 
     #Get new positions
-    new_locations = bigquery_positions_by_id(uoid, uoid_date_formated)
+    new_locations = bigquery_positions_by_id(uoid, uoid_date_formated, uoid_date_formated)
     #print('New locations from BigQuery ' + uoid + ' : ' + str(len(new_locations)))
 
     #Calculate movements

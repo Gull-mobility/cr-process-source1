@@ -56,11 +56,14 @@ def calculate_movements(new_locations,old_locations):
                     movements.append(prepare_movement_object(new_locations[plate], old_locations[plate], round(distance,2), recharge))
                     
                     #Save the change in firestore
-                    location_with_changes[plate] = new_locations[plate]
+                    #location_with_changes[plate] = new_locations[plate]
 
                     #Add one to change counter
                     counter_change = counter_change + 1
 
+        #Save the change in firestore
+        #Now we want to save all the change becouse if not save the start of trip is not true
+        location_with_changes[plate] = new_locations[plate]
 
     return location_with_changes, movements, counter_new, counter_change
 
@@ -101,7 +104,9 @@ def prepare_movement_object(new_location, old_location, distance, recharge):
         "clusterLongitude_end": new_location['clusterLongitude'],
         "timestamp_start": timestamp_start_format,
         "timestamp_end": new_location['timestamp'].strftime("%Y-%m-%d %H:%M:%S"),
-        "tipoVehiculo": new_location['tipoVehiculo']
+        "tipoVehiculo": new_location['tipoVehiculo'],
+        "distance" :distance,
+        "recharge" : recharge
     } 
 
     return movement_object
