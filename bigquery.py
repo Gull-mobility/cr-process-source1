@@ -14,7 +14,7 @@ def bigquery_positions_by_id(uoid, date_first, date_end):
 
     #Partition time is to access to information that BigQuery dont put yet in a partition
     query = ' '.join(("SELECT * FROM `vacio-276411.mainDataset.bulkData`"
-                "WHERE DATE(timestamp) BETWEEN '" + date_first  + "' AND '" + date_end  + "'AND uoid = '" + uoid +"'",
+                "WHERE  DATE(_PARTITIONTIME) BETWEEN '" + date_first  + "' AND '" + date_end  + "'AND uoid = '" + uoid +"'",
                 "OR (_PARTITIONTIME IS null AND uoid = '" + uoid +"')"))
 
     query_job = client.query(query)  # Make an API request.
@@ -59,7 +59,7 @@ def bigquery_bulk_uoid():
 
   query = """
       SELECT uoid, _PARTITIONTIME as pt, realTime FROM `vacio-276411.mainDataset.bulkData` 
-      WHERE DATE(timestamp) = "2022-08-08"
+      WHERE  DATE(_PARTITIONTIME) = "2022-08-08"
       GROUP BY uoid, pt, realTime
       ORDER BY realTime ASC
       LIMIT 4
@@ -73,7 +73,7 @@ def bigquery_bulk_uoid():
 
   query = """
       SELECT uoid, _PARTITIONTIME as pt, realTime FROM `vacio-276411.mainDataset.bulkData` 
-       WHERE DATE(timestamp) BETWEEN "2010-04-01" AND  "2021-04-30"
+       WHERE  DATE(_PARTITIONTIME) BETWEEN "2010-04-01" AND  "2021-04-30"
       GROUP BY uoid, pt, realTime
       ORDER BY realTime ASC
   """
