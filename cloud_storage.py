@@ -18,7 +18,7 @@ def upload_to_storage(data: dict):
 
     ## uploading data using upload_from_string method
     ## json.dumps() serializes a dictionary object as string
-    blob.#upload_from_string(json.dumps(data))
+    #blob.upload_from_string(json.dumps(data))
     blob.upload_from_string(json.dumps(data, indent=4, sort_keys=True, default=str))
     
     #Log
