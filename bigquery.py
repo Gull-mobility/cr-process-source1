@@ -69,11 +69,11 @@ def bigquery_bulk_uoid():
   #ATENTION WITH YEAR
 
   #This query can be reduced using _PARTITIONTIME instead of timestamp
-  #DONE "2010-01-01" AND  "2021-03-31
+  #DONE "2010-01-01" AND  "2022-08-25"
 
   query = """
       SELECT uoid, _PARTITIONTIME as pt, realTime FROM `vacio-276411.mainDataset.bulkData` 
-       WHERE  DATE(_PARTITIONTIME) BETWEEN "2010-04-01" AND  "2021-04-30"
+       WHERE  DATE(_PARTITIONTIME) BETWEEN "2022-08-26" AND  "2022-08-26"
       GROUP BY uoid, pt, realTime
       ORDER BY realTime ASC
   """

@@ -5,6 +5,7 @@ def execution(uoid):
     from firestore import firestore_get_old_situation, firestore_write_changes
     from bigquery import bigquery_positions_by_id, bigquery_save_movements
     from movements_analyze import calculate_movements
+    from cloud_storage import upload_to_storage
 
     #Get last database locations
     old_location = firestore_get_old_situation()
@@ -31,3 +32,7 @@ def execution(uoid):
 
     #Write in firestore the changes
     firestore_write_changes(locations_with_changes)
+
+    #Write in cloud storage
+    #TODO - This process need to save all vehicles locations, not only the changes
+    upload_to_storage(locations_with_changes)
