@@ -7,7 +7,8 @@ def calculate_movements(new_locations,old_locations):
     location_with_changes = {}
     movements = []
     counter_new = 0
-    counter_change = 0
+    counter_change = {}
+    all_locations = old_locations.copy()
 
     #Para todas las nuevas posiciones comparamos con posicion anterior
     for plate in new_locations:
@@ -25,6 +26,8 @@ def calculate_movements(new_locations,old_locations):
 
             #Si es nueva la anadimos a firestore
             location_with_changes[plate] = new_locations[plate]
+            #Also update all_locations
+            all_locations[plate] = new_locations[plate]
             #Add one to new counter
             counter_new = counter_new + 1
         else:
@@ -64,8 +67,9 @@ def calculate_movements(new_locations,old_locations):
         #Save the change in firestore
         #Now we want to save all the change becouse if not save the start of trip is not true
         location_with_changes[plate] = new_locations[plate]
+        all_locations[plate] = new_locations[plate]
 
-    return location_with_changes, movements, counter_new, counter_change
+    return location_with_changes, movements, counter_new, counter_change,all_locations
 
 #Build object to save in table 
 def prepare_movement_object(new_location, old_location, distance, recharge):

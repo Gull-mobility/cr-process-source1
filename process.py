@@ -20,7 +20,7 @@ def execution(uoid):
     print('New locations from BigQuery ' + uoid + ' : ' + str(len(new_locations)))
 
     #Calculate movements
-    locations_with_changes, movements, counter_new, counter_change = calculate_movements(new_locations, old_location)
+    locations_with_changes, movements, counter_new, counter_change, all_locations = calculate_movements(new_locations, old_location)
 
     #Locantions can be bigger than movements because a new vehicle is not a movements
     print('New vehicles: ' + str(counter_new) + '. Changes: ' + str(counter_change))
@@ -34,5 +34,5 @@ def execution(uoid):
     firestore_write_changes(locations_with_changes)
 
     #Write in cloud storage
-    #TODO - This process need to save all vehicles locations, not only the changes
-    upload_to_storage(locations_with_changes)
+    upload_to_storage(all_locations)
+    print('Save in cloud storage ' + str(len(all_locations)) + ' vehicles')

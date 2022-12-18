@@ -30,7 +30,7 @@ for id,row_uoid in enumerate(uoids_list):
     #print('New locations from BigQuery ' + uoid + ' : ' + str(len(new_locations)))
 
     #Calculate movements
-    locations_with_changes, movements, counter_new, counter_change = calculate_movements(new_locations, old_location)
+    locations_with_changes, movements, counter_new, counter_change, all_locations = calculate_movements(new_locations, old_location)
 
     #Locantions can be bigger than movements because a new vehicle is not a movements
     #print('New vehicles: ' + str(counter_new) + '. Changes: ' + str(counter_change))
